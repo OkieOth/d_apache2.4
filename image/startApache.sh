@@ -9,30 +9,22 @@ if [ -d $extraConfDir ]; then
     # additional initialisation is 
     for f in $extraConfDir/*.conf; do
         if ! [ -f $f ]; then continue; fi
-        name=${f##*/}
-        destLink=/etc/apache2/conf-enabled/$name
-        if ! [ -L $destLink ]; then
-            echo "replace conf link: $name -> $destLink"
-            rm -rf $destLink && ln -s $f $destLink
+        if cp "$f" /etc/apache2/conf-enabled; then
+            echo "copied configuration $f to /etc/apache2/conf-enabled"
         else
-            echo "create conf link: $name -> $destLink"
-            ln -s $f $destLink
-        fi 
+            echo "error while copy configuration $f to /etc/apache2/conf-enabled"
+        fi
     done
 fi
 
 if [ -d $extraSitesDir ]; then
     for f in $extraSitesDir/*.conf; do
         if ! [ -f $f ]; then continue; fi
-        name=${f##*/}
-        destLink=/etc/apache2/sites-enabled/$name
-        if [ -L $destLink ]; then
-            echo "replace site link: $name -> $destLink"
-            rm -rf $destLink && ln -s $f $destLink
+        if cp "$f" /etc/apache2/sites-enabled; then
+            echo "copied configuration $f to /etc/apache2/sites-enabled"
         else
-            echo "create site link: $name -> $destLink"
-            ln -s $f $destLink
-        fi 
+            echo "error while copy configuration $f to /etc/apache2/sites-enabled"
+        fi
     done
 fi
 
