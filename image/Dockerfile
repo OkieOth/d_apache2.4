@@ -8,7 +8,7 @@ RUN echo "deb http://ftp.de.debian.org/debian jessie-backports main" >> /etc/apt
     rm -rf /usr/share/man/* /usr/share/groff/* /usr/share/info/* && \
     rm -rf /usr/share/lintian/* /usr/share/linda/* /var/cache/man/*
 
-RUN a2enmod expires headers
+RUN a2enmod expires headers proxy_http proxy_ajp
 
 RUN ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
     ln -sf /proc/self/fd/1 /var/log/apache2/error.log
