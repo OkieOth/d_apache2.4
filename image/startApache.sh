@@ -31,6 +31,9 @@ fi
 if [ -z $DEBUG_LEVEL ]; then
     DEBUG_LEVE=info
 fi
+if [ -f /var/run/apache2/apache2.pid ]; then
+    rm -f /var/run/apache2/apache2.pid
+fi
 
 apachectl -f /etc/apache2/apache2.conf -e info -DFOREGROUND
 
